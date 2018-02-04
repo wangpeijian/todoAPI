@@ -1,7 +1,6 @@
 /**
  * Created by dx on 16-8-30.
  */
-import config from '../config';
 import log4js from 'log4js'
 
 /**
@@ -13,17 +12,17 @@ log4js.configure({
 	appenders: {
 		console: {type: 'console'},
 		infoOuter: {
-			type: 'dateFile', filename: `${config.logPath}info`, pattern: '.yyyy-MM-dd.log', alwaysIncludePattern: true,
+			type: 'dateFile', filename: `${$config.logPath}info`, pattern: '.yyyy-MM-dd.log', alwaysIncludePattern: true,
 		},
 		errorOuter: {
-			type: 'dateFile', filename: `${config.logPath}error`, pattern: '.yyyy-MM-dd.log',
+			type: 'dateFile', filename: `${$config.logPath}error`, pattern: '.yyyy-MM-dd.log',
 			alwaysIncludePattern: true,
 		}
 	},
 	categories: {
-		default: {appenders: ['console'], level: config.logLevel.debug},
-		level_info: {appenders: ['console', 'infoOuter'], level: config.logLevel.info},
-		level_error: {appenders: ['console', 'infoOuter', 'errorOuter'], level: config.logLevel.error}
+		default: {appenders: ['console'], level: $config.logLevel.debug},
+		level_info: {appenders: ['console', 'infoOuter'], level: $config.logLevel.info},
+		level_error: {appenders: ['console', 'infoOuter', 'errorOuter'], level: $config.logLevel.error}
 	}
 });
 

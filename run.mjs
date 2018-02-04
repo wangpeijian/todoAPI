@@ -3,10 +3,9 @@ import os from 'os';
 import register from './src/tools/globalRegister'
 register();
 
-import config from './src/config';
 import server from './src/core/server'
 
-const port = config.port;
+const port = $config.port;
 const sTime = new Date().getTime();
 const numCPUs = os.cpus().length;
 

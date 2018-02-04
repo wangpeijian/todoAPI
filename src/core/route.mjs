@@ -5,8 +5,6 @@
 import url from "url"
 import path from 'path'
 import util from 'util'
-
-import config from '../config'
 import handle from './handle'
 import {controllerMap} from '../controllerMap'
 
@@ -17,13 +15,13 @@ function route(request, response) {
 	
 	//处理用户请求的方法
 	if (extensionName === '') {
-		$log.i('用户请求端口:' + config.port, '用户请求接口:' + pathname, '请求方式:' + request.method);
+		$log.i('用户请求端口:' + $config.port, '用户请求接口:' + pathname, '请求方式:' + request.method);
 		dispense(request, response, pathname);
 		return;
 	}
 	
-	const filePath = path.normalize(config.basePath + pathname);
-	$log.i('用户请求端口:' + config.port, '用户请求文件:' + filePath)
+	const filePath = path.normalize($config.basePath + pathname);
+	$log.i('用户请求端口:' + $config.port, '用户请求文件:' + filePath)
 	
 	handle.returnFile(request, response, filePath, extensionName);
 }

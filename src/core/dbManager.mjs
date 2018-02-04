@@ -1,15 +1,14 @@
 import mysql from 'mysql'
-import config from '../config'
 import Promise from 'promise'
 
 
 //使用数据库连接池
 const pool = mysql.createPool({
-    host: config.DB_host,
-    user: config.DB_username,
-    password: config.DB_password,
-    database: config.DB_database,
-    port: config.DB_port
+    host: $config.DB_host,
+    user: $config.DB_username,
+    password: $config.DB_password,
+    database: $config.DB_database,
+    port: $config.DB_port
 });
 
 

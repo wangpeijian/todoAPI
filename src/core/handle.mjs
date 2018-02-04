@@ -10,7 +10,6 @@ import formidable from 'formidable'
 import Promise from 'promise'
 import util from 'util'
 import url from 'url'
-import config from '../config'
 import path   from 'path'
 
 /**
@@ -42,7 +41,7 @@ const resolvePostData = function(request){
 
         if(headers['content-type'] !== undefined && headers['content-type'].indexOf("multipart/form-data") !== -1){
 
-            const tmpPath = config.tmpPath + new Date().Format("yyyy-MM-dd");
+            const tmpPath = $config.tmpPath + new Date().Format("yyyy-MM-dd");
 
             if (!fs.existsSync(tmpPath)) {
                 fs.mkdirSync(tmpPath);
@@ -58,7 +57,7 @@ const resolvePostData = function(request){
 
             //对上传的文件单做处理，将上传好的文件从临时目录放到正式目录下
             postForm.on('file', function(name, file) {
-                fs.renameSync(file.path, config.storagePath + file.hash+ "-" +file.name);
+                fs.renameSync(file.path, $config.storagePath + file.hash+ "-" +file.name);
             });
 
             postForm.parse(request, function(err, fields, files) {
@@ -116,14 +115,14 @@ const resolvePostData = function(request){
  * @param {Object} answer
  * @param {Object} contentType
  */
-function response(response, answer, contentType = config.mime.json){
+function response(response, answer, contentType = $config.mime.json){
 	if(contentType === undefined){
-        contentType = config.mime.json;
+        contentType = $config.mime.json;
 	}
 
 	//根据不同的数据类型，执行不同的输出方式
 	switch(contentType){
-		case config.mime.json:
+		case $config.mime.json:
 			/*设置ajax跨域请求头*/
 			response.writeHead(200,
 				{	'Content-Type': contentType + ";charset=utf-8",
@@ -185,7 +184,7 @@ function returnFile(request, response, filePath, extensionName){
     fs.exists(filePath, function(exists){
 	    let realPath = filePath;
 	
-	    let contentType = config.mime[extensionName];
+	    let contentType = $config.mime[extensionName];
         if(contentType === undefined){
             contentType = extensionName;
         }
@@ -203,8 +202,8 @@ function returnFile(request, response, filePath, extensionName){
 		    fs.stat(filePath, function(err, stat){
 			    const lastModified = stat.mtime.toUTCString();
 			    head['Last-Modified'] = lastModified;
-			    head['Cache-Control'] = 'max-age=' + (config.expires * 1000);
-			    head["Expires"] = new Date(new Date().getTime() + config.expires * 1000).toUTCString();
+			    head['Cache-Control'] = 'max-age=' + ($config.expires * 1000);
+			    head["Expires"] = new Date(new Date().getTime() + $config.expires * 1000).toUTCString();
 		    	
 			    //判断是否失效
 			    const ifModifiedSince = "If-Modified-Since".toLowerCase();
@@ -221,7 +220,7 @@ function returnFile(request, response, filePath, extensionName){
 	    }else{
             //未找到文件
 		    realPath = path.normalize("views/error/404.html");
-            head = {'Content-Type': config.mime.html};
+            head = {'Content-Type': $config.mime.html};
             status = 404;
 		    msg = "Not Found";
 		
