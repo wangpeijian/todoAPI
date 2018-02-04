@@ -1,7 +1,6 @@
 import mysql from 'mysql'
 import Promise from 'promise'
 
-
 //使用数据库连接池
 const pool = mysql.createPool({
     host: $config.DB_host,

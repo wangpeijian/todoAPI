@@ -8,52 +8,55 @@ import log4js from 'log4js'
  * @param path
  * @returns {{l: l, e: e}}
  */
-log4js.configure({
-	appenders: {
-		console: {type: 'console'},
-		infoOuter: {
-			type: 'dateFile', filename: `${$config.logPath}info`, pattern: '.yyyy-MM-dd.log', alwaysIncludePattern: true,
-		},
-		errorOuter: {
-			type: 'dateFile', filename: `${$config.logPath}error`, pattern: '.yyyy-MM-dd.log',
-			alwaysIncludePattern: true,
-		}
-	},
-	categories: {
-		default: {appenders: ['console'], level: $config.logLevel.debug},
-		level_info: {appenders: ['console', 'infoOuter'], level: $config.logLevel.info},
-		level_error: {appenders: ['console', 'infoOuter', 'errorOuter'], level: $config.logLevel.error}
+
+export default class {
+	constructor(){
+		log4js.configure({
+			appenders: {
+				console: {type: 'console'},
+				infoOuter: {
+					type: 'dateFile', filename: `${$config.logPath}info`, pattern: '.yyyy-MM-dd.log', alwaysIncludePattern: true,
+				},
+				errorOuter: {
+					type: 'dateFile', filename: `${$config.logPath}error`, pattern: '.yyyy-MM-dd.log',
+					alwaysIncludePattern: true,
+				}
+			},
+			categories: {
+				default: {appenders: ['console'], level: $config.logLevel.debug},
+				level_info: {appenders: ['console', 'infoOuter'], level: $config.logLevel.info},
+				level_error: {appenders: ['console', 'infoOuter', 'errorOuter'], level: $config.logLevel.error}
+			}
+		});
+		
+		this.loggerDebug = log4js.getLogger();
+		this.loggerInfo = log4js.getLogger("level_info");
+		this.loggerError = log4js.getLogger("level_error");
 	}
-});
-
-const loggerDebug = log4js.getLogger();
-const loggerInfo = log4js.getLogger("level_info");
-const loggerError = log4js.getLogger("level_error");
-
-
-function e(...arr) {
-	arr.map(item => {
-		loggerError.error(item);
-	});
-	loggerError.error("\n");
+	
+	e(...arr) {
+		arr.map(item => {
+			this.loggerError.error(item);
+		});
+		this.loggerError.error("\n");
+	}
+	
+	i(...arr) {
+		arr.map(item => {
+			this.loggerInfo.info(item);
+		});
+		this.loggerInfo.info("\n");
+	}
+	
+	d(...arr) {
+		arr.map(item => {
+			this.loggerDebug.debug(item);
+		});
+		this.loggerDebug.debug("\n");
+	}
 }
 
-function i(...arr) {
-	arr.map(item => {
-		loggerInfo.info(item);
-	});
-	loggerInfo.info("\n");
-}
 
-function d(...arr) {
-	arr.map(item => {
-		loggerDebug.debug(item);
-	});
-	loggerDebug.debug("\n");
-}
 
-export default {
-	e,
-	i,
-	d
-}
+
+

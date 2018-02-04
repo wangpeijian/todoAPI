@@ -1,8 +1,5 @@
 import os from 'os';
-
-import register from './src/tools/globalRegister'
-register();
-
+import './src/tools/globalRegister'
 import server from './src/core/server'
 
 const port = $config.port;
