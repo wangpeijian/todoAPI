@@ -12,8 +12,6 @@ import util from 'util'
 import url from 'url'
 import config from '../config'
 import path   from 'path'
-import log from '../tools/myLog'
-
 
 /**
  * 获取get请求数据，获取后执行回调函数
@@ -81,7 +79,7 @@ const resolvePostData = function(request){
             });
 
             request.on('end', function(){    //在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
-                //log.i('post请求数据：', postDataStr);
+                //$log.i('post请求数据:', postDataStr);
 
                 //url编码数据解析
                 if(headers['content-type'] !== undefined && headers['content-type'].indexOf("application/x-www-form-urlencoded") !== -1){
@@ -135,7 +133,9 @@ function response(response, answer, contentType = config.mime.json){
 					'X-Powered-By': '3.2.1',
 				}
 			);
-			response.write(JSON.stringify(answer));
+			const res = JSON.stringify(answer);
+			response.write(res);
+			$log.i(`响应结果:${res}`);
 			break;
 		default:
 			response.writeHead(200, {

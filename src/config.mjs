@@ -1,16 +1,9 @@
 import path from 'path'
 const config = {};
 
-/*----------网络请求反回码-----------*/
-config.ercode = {
-    "ok" : 0,               //请求成功
-    "fail" : -1,            //请求失败
-    "error" : 10001,        //一般请求错误
-};
-
 /*----------项目配置信息-----------*/
 //监听端口号
-config.port = 8080;
+config.port = 8088;
 
 //缓存超时时间(秒)
 config.expires = 31536000;

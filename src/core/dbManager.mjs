@@ -1,7 +1,6 @@
 import mysql from 'mysql'
 import config from '../config'
 import Promise from 'promise'
-import log from '../tools/myLog'
 
 
 //使用数据库连接池
@@ -18,16 +17,16 @@ const pool = mysql.createPool({
  * 获取数据链接
  * @returns {*}
  */
-function getConnect() {
-    return new Promise(function (resolve, reject) {
-        pool.getConnection(function (err, conn) {
-            if (err) {
-	            reject(err);
-            } else {
-                resolve(conn)
-            }
-        });
-    });
+async function getConnect() {
+	return new Promise(function (resolve, reject) {
+		pool.getConnection(function (err, conn) {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(conn)
+			}
+		});
+	});
 }
 
 /**
@@ -40,32 +39,29 @@ function query(sql, values) {
         return new Promise(function (resolve, reject) {
             try {
                 const query = conn.query(sql, values, function selectCb(err, results, fields) {
-                    //释放数据库连接
-                    conn.release();
                     if (err) {
-                        log.e(`数据库SQL错误: ${query.sql}`, err);
+                        $log.e(`数据库SQL错误: ${query.sql}`, err);
                         resolve(null);
                     } else {
-                        log.i(`数据库SQL执行完毕: ${query.sql}`);
+                        $log.i(`数据库SQL执行完毕: ${query.sql}`);
                         resolve(results);
                     }
                 });
             } catch (err) {
-                log.e(`数据库查询错误:`, err);
+                $log.e(`数据库查询错误:`, err);
                 resolve(null);
+            } finally {
+	            //释放数据库连接
+	            conn.release();
             }
         })
     }).catch(function(err){
-	    log.e(`连接数据库失败！:`, err);
+	    $log.e(`连接数据库失败！:`, err);
     });
 }
 
-function sqlResult(sql, values){
-	return new Promise(function(res, rej){
-		query(sql, values).then(function(result){
-			res(result);
-		})
-	})
+async function sqlResult(sql, values){
+	return await query(sql, values);
 }
 
 export default {
