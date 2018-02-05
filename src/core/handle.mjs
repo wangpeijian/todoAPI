@@ -243,18 +243,7 @@ function notFound(response){
     response.end();
 }
 
-function sendError(response, err){
-	const result = {};
-    result.code = 500;
-    result.msg = err;
-
-    response.writeHead(500, {'Content-Type': 'application/json'});
-    response.write(util.inspect(result));
-    response.end();
-}
-
 export default {
-	sendError,
 	notFound,
 	returnFile,
 	response,

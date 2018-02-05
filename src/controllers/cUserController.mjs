@@ -10,12 +10,12 @@ export default class {
 		
 		let res = await cUserService.existPhone(phone);
 		if (res.length === 0) {
-			return $error("用户不存在")
+			throw $error("用户不存在");
 		} else {
 			const user = res[0];
 			
 			if (user.password !== password) {
-				return $error("密码输入错误")
+                throw $error("密码输入错误")
 			} else {
 				delete user.password;
 				return $success(user);
