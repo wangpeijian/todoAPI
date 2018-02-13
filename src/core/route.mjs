@@ -34,17 +34,19 @@ function route(request, response) {
  * @param pathname
  */
 async function dispense(request, response, pathname) {
-	const path = pathname.split("/");
-	
-	if (path.length < 3) {
+    pathname = pathname.substr(1, pathname.length);
+
+    const path = pathname.split("/");
+	if (path.length !== 3) {
 		handle.notFound(response);
 		return;
 	}
-	
+
+    const project = path[0];
 	const controller = controllerMap.get(path[1]);
 	const action = controller[path[2]];
 	
-	if (controller === undefined || action === undefined) {
+	if (project !== $config.project || controller === undefined || action === undefined) {
 		handle.notFound(response);
 	} else {
 		
@@ -55,7 +57,9 @@ async function dispense(request, response, pathname) {
 			`get请求内容:${util.inspect(request._getParameter, false, null, false)}`);
 		
 		action(request, response).then(function (obj) {
-            handle.response(response, obj);
+			if(obj){
+                handle.response(response, obj);
+			}
 		}).catch(function (err) {
 			handle.response(response, {msg: err.message, code: err.code});
 		})

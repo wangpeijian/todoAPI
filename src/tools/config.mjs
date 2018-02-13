@@ -2,22 +2,11 @@ import path from 'path'
 const config = {};
 
 /*----------项目配置信息-----------*/
+//项目名
+config.project = 'api';
+
 //监听端口号
 config.port = 8088;
-
-//缓存超时时间(秒)
-config.expires = 31536000;
-
-//项目跟路径
-config.basePath = path.normalize(process.cwd() + "/" );
-
-//log路径
-config.logPath = config.basePath + "sys/log/";
-//tmp路径
-config.tmpPath = config.basePath + "sys/tmp/";
-//storage路径
-config.storagePath = config.basePath + "sys/storage/";
-
 
 /*----------数据库配置信息-----------*/
 //数据库地址
@@ -30,6 +19,25 @@ config.DB_username = 'root';
 config.DB_password = '';
 //数据库名
 config.DB_database = 'todo';
+
+/*----------微信配置信息-----------*/
+config.domain = "http://wpj-920417.eicp.net";
+config.appid = "wxa1b636191d0d98f2";
+config.appsecret = "c43f3c10bc3e366102a4608a71234fe4";
+
+/*--------------路径配置------------*/
+//项目跟路径
+config.basePath = path.normalize(process.cwd() + "/" );
+
+//log路径
+config.logPath = config.basePath + "sys/log/";
+//tmp路径
+// config.tmpPath = config.basePath + "sys/tmp/";
+config.tmpPath = "D:/nginx-1.13.6/html/temp/";
+
+//storage路径
+// config.storagePath = config.basePath + "sys/storage/";
+config.storagePath = "D:/nginx-1.13.6/html/file/";
 
 /*--------------枚举类型配置------------*/
 

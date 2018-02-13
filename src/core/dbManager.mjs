@@ -32,7 +32,7 @@ async function getConnect() {
  * @param sql
  * @param values
  */
-function query(sql, values) {
+function query(sql, values = []) {
     return getConnect().then(function (conn) {
         return new Promise(function (resolve, reject) {
             try {

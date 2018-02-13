@@ -18,7 +18,14 @@ function error(msg = "未知错误", code = FAIL) {
 	return cError;
 }
 
+function redirect(response, url){
+    $log.i(`页面重定向,地址:${url}`);
+    response.writeHead("301", {'Location': url});
+    response.end();
+}
+
 export {
 	success,
 	error,
+    redirect,
 }

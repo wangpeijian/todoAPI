@@ -2,11 +2,10 @@
  * Created by admin on 2016/3/27.
  */
 import dbManager from '../../core/dbManager'
-import helper from "../../tools/helper.mjs";
 
 async function getList({userId, page, size}){
     const sql = " select ct.id, ct.content, ct.updateTime from c_todo as ct where userId = ? limit ?, ?";
-    const values = [userId, ...helper.getLimit(page, size)];
+    const values = [userId, ...$helper.getLimit(page, size)];
 	return await dbManager.sqlResult(sql, values);
 }
 

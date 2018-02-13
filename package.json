@@ -15,6 +15,7 @@
     "formidable": "1.1.1",
     "log4js": "2.5.2",
     "mysql": "2.15.0",
+    "node-fetch": "^2.0.0",
     "nodemailer": "4.4.2",
     "pm2": "2.9.3",
     "promise": "8.0.1",
