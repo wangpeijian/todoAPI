@@ -21,6 +21,9 @@ export default class {
 	async getList(request) {
 		const {userId, page} = request._postParameter;
 		let res = await cTodoService.getList({userId, page});
+		res.map(item =>{
+			item.updateTime = new Date(item.updateTime).Format("yyyy-MM-dd hh:mm:ss");
+		});
 		return $success(res);
 		
 	}

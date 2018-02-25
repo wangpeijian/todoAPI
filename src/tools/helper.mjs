@@ -105,7 +105,7 @@ export default class {
 	 * @param a
 	 * @returns {string}
 	 */
-	getRandomString(a) {
+	getRandomString(a = 32) {
 		let d,
 			e,
 			b = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",

@@ -9,6 +9,13 @@ async function existPhone(phone){
 	return await dbManager.sqlResult(sql, values);
 }
 
+async function add({id, phone, name, password}){
+	const sql = " insert into c_user (id, phone, updateTime, name, password) values(?, ?, ?, ?, ?) ";
+	const values = [id, phone, new Date(), name, password];
+	return await dbManager.sqlResult(sql, values);
+}
+
 export default {
 	existPhone,
+	add
 }

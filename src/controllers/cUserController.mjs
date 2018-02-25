@@ -24,6 +24,23 @@ export default class {
 		
 	}
 	
+	async register(request) {
+		const {phone, password} = request._postParameter;
+		
+		let res = await cUserService.existPhone(phone);
+		if (res.length !== 0) {
+			throw $error("用户已存在");
+		} else {
+			cUserService.add({
+				id: $helper.getRandomString(),
+				phone,
+				name: phone,
+				password
+			});
+			return $success();
+		}
+		
+	}
 }
 
 
